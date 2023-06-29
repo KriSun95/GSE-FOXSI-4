@@ -311,7 +311,8 @@ class DetectorPlotView(QWidget):
         self.currentLabel = QLabel("Current (mA):", self)
 
         self.groupBox = QGroupBox(self.name)
-        self.groupBox.setStyleSheet("QGroupBox {border-width: 1px; border-style: outset; border-radius: 10px; border-color: black;}")
+        self._control_border_colour(colour_hex="#F0F0F0")
+        
         self.globalLayout = QHBoxLayout()
 
         # organize layout
@@ -438,18 +439,25 @@ class DetectorPlotView(QWidget):
 
         logging.debug("data is plotting")
 
+        self._control_border_colour(colour_hex="#10FF10")
+
     def stopPlotUpdate(self):
         """
         Called when the `modalStopPlotDataButton` button is pressed.
         
         This stops a QTimer set by `self.start_plot_update`. 
         """
+        if hasattr(self,"timer"):
+            logging.debug("stopping the data from plotting")
+            self.modalStartPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: black;}')
+            self.modalStopPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: red;}')
+            self.timer.stop()
+            logging.debug("data stopped from plotting")
+        self._control_border_colour(colour_hex="#7D7D7D")
 
-        logging.debug("stopping the data from plotting")
-        self.modalStartPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: black;}')
-        self.modalStopPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: red;}')
-        self.timer.stop()
-        logging.debug("data stopped from plotting")
+    def _control_border_colour(self, colour_hex):
+        # e.g., colour_hex=#10FF10 for almost green
+        self.groupBox.setStyleSheet("QGroupBox {border-width: 2px; border-style: outset; border-radius: 10px; border-color: "+f"{colour_hex}"+";}")
 
     def update_plot_data(self):
         """Method has to be here to give `startPlotUpdate` method something to call."""
@@ -573,7 +581,7 @@ class DetectorPlotView1D(DetectorPlotView):
         """
         return [],[]
     
-    def check_new_entries(self, data, lastT):
+    def check_new_entries(self, data, last_t):
         """
         Method to check if there are entries read from the file that have not been plotted yet.
 
@@ -584,18 +592,18 @@ class DetectorPlotView1D(DetectorPlotView):
             indicate the axis being selected over (e.g., times so we onnly plot data that has not 
             been handled before).
 
-        lastT : `int`, `float`
+        last_t : `int`, `float`
             The value of the last x-value plotted. Used to filter out data lines already plotted.
 
         Returns
         -------
         `tuple` :
-            (x, y) The new x and y coordinates as lists to be plotted where x>`lastT`.
+            (x, y) The new x and y coordinates as lists to be plotted where x>`last_t`.
         """
         newts, newds = data
 
         # find indices of the x and ys not plotted yet
-        mask = (newts>lastT) if lastT is not None else np.array([True]*len(newts))
+        mask = (newts>last_t) if last_t is not None else np.array([True]*len(newts))
 
         # if no entries are to be plotted just return nothing
         if (~mask).all():
@@ -642,20 +650,20 @@ class DetectorPlotView1D(DetectorPlotView):
             #AttributeError: 'NoneType' object has no attribute 'tolist', this from having nothing plotted originally
             return [], []
         
-    def get_data(self, lastT):
+    def get_data(self, last_t):
         """
         Read the file `self.data_file` from the end with a memory buffer size of `self.bufferSize` and 
-        return data from lines with a first value greater than `lastT`
+        return data from lines with a first value greater than `last_t`
 
         Parameters
         ----------
-        lastT : `int`, `float`
+        last_t : `int`, `float`
             The value of the last x-value plotted. Used to filter out data lines already plotted.
 
         Returns
         -------
         `tuple` :
-            (x, y) The new x and y coordinates to be plots where x>`lastT`.
+            (x, y) The new x and y coordinates to be plots where x>`last_t`.
         """
 
         # check if the file exists yet, if not return nothing
@@ -667,7 +675,7 @@ class DetectorPlotView1D(DetectorPlotView):
         if data==self.return_empty():
             return self.return_empty()
 
-        return self.check_new_entries(data, lastT)
+        return self.check_new_entries(data, last_t)
     
     def update_plot_data(self):
         """
@@ -683,8 +691,8 @@ class DetectorPlotView1D(DetectorPlotView):
         x, y = self.get_plot_data()
 
         # find the last x-value plotted
-        lastX = x[-1] if len(x)>0 else None
-        newx, newy = self.get_data(lastX)
+        last_x = x[-1] if len(x)>0 else None
+        newx, newy = self.get_data(last_x)
 
         # just average over some coordinates fto reduce the number of points being plotted
         newx, newy = self.process_data(arrx=newx, arry=newy)
