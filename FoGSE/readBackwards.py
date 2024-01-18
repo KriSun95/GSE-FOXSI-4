@@ -1,5 +1,3 @@
-import os
-
 """read a file returning the lines in reverse order for each call of readline()
 This actually just reads blocks (4096 bytes by default) of data from the end of
 the file and returns last line in an internal buffer.  I believe all the corner
@@ -10,6 +8,11 @@ and was originally written by Matt Billenstein in the form shown in `recipe-1206
 
 I (Kris) have mainly added some functionality so the BackwardsReader class can be used in a context
 manager. I have also fixed the ...split('\n') lines."""
+
+import os
+import struct
+
+from FoGSE.parsers.CdTeparser import CdTerawalldata2parser
 
 class BackwardsReader:
 
@@ -94,6 +97,21 @@ class BackwardsReader:
     def __exit__(self, exc_type, exc_value, exc_traceback):
         """Make sure to close the opened file before leaving context manager."""
         self.close()
+
+
+def read_raw_cdte(file):
+    # blksize=41204 for first full frame, blksize=73984 to do 2 frames, 
+    # so 73984 + (73984-41204) for the next? -> correct, so 41204 bytes
+    # to get to the end of the first frame, 32780 bytes thereafter
+    with BackwardsReader(file=file, blksize=50_000, forward=True) as f:
+        iterative_unpack=struct.iter_unpack("<I",f.read_block())
+        datalist=[]
+        for _,data in enumerate(iterative_unpack):
+
+            datalist.append(data[0])
+
+        flags, event_df, all_hkdicts = CdTerawalldata2parser(datalist)
+    return flags, event_df, all_hkdicts
 
 
 if(__name__ == "__main__"):

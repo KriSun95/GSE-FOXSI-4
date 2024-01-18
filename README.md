@@ -16,3 +16,7 @@ GSE for calibration and flight operation of FOXSI-4.
 4. `(venv) % pip install <package>` for all the [dependencies](#dependencies). The packages should be stored locally in your virtual environment.
 5. Inside `FoGSE/`, run `pip install -e .` to install the FoGSE package in an editable way. This makes it accessible to the `tests/` folder (see [here](https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#50193944) for more info on sharing Python modules to sibling directories).
 6. Then, in a sibling or child folder of `FoGSE/` you should be able to `import FoGSE.<module_name>`
+
+## Live Demos
+
+For demos of live data, see the `demos` and `demos.live_demos` module.

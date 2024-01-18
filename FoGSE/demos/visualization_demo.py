@@ -311,8 +311,7 @@ class DetectorPlotView(QWidget):
         self.currentLabel = QLabel("Current (mA):", self)
 
         self.groupBox = QGroupBox(self.name)
-        self._control_border_colour(colour_hex="#F0F0F0")
-        
+        self.groupBox.setStyleSheet("QGroupBox {border-width: 1px; border-style: outset; border-radius: 10px; border-color: black;}")
         self.globalLayout = QHBoxLayout()
 
         # organize layout
@@ -381,8 +380,7 @@ class DetectorPlotView(QWidget):
         self.layoutCenter.addWidget(self.graphPane)
         self.layoutCenter.addSpacing(self.spacing)
 
-        # self.graphPane.setMinimumSize(QtCore.QSize(150,100))
-        self.graphPane.setMinimumSize(QtCore.QSize(300,200))
+        self.graphPane.setMinimumSize(QtCore.QSize(150,100))
         self.graphPane.setSizePolicy(QtWidgets.QSizePolicy.Policy.MinimumExpanding, QtWidgets.QSizePolicy.Policy.MinimumExpanding)
 
         self.layoutMain = QHBoxLayout()
@@ -440,25 +438,18 @@ class DetectorPlotView(QWidget):
 
         logging.debug("data is plotting")
 
-        self._control_border_colour(colour_hex="#10FF10")
-
     def stopPlotUpdate(self):
         """
         Called when the `modalStopPlotDataButton` button is pressed.
         
         This stops a QTimer set by `self.start_plot_update`. 
         """
-        if hasattr(self,"timer"):
-            logging.debug("stopping the data from plotting")
-            self.modalStartPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: black;}')
-            self.modalStopPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: red;}')
-            self.timer.stop()
-            logging.debug("data stopped from plotting")
-        self._control_border_colour(colour_hex="#7D7D7D")
 
-    def _control_border_colour(self, colour_hex):
-        # e.g., colour_hex=#10FF10 for almost green
-        self.groupBox.setStyleSheet("QGroupBox {border-width: 2px; border-style: outset; border-radius: 10px; border-color: "+f"{colour_hex}"+";}")
+        logging.debug("stopping the data from plotting")
+        self.modalStartPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: black;}')
+        self.modalStopPlotDataButton.setStyleSheet('QPushButton {background-color: white; color: red;}')
+        self.timer.stop()
+        logging.debug("data stopped from plotting")
 
     def update_plot_data(self):
         """Method has to be here to give `startPlotUpdate` method something to call."""
@@ -582,7 +573,7 @@ class DetectorPlotView1D(DetectorPlotView):
         """
         return [],[]
     
-    def check_new_entries(self, data, last_t):
+    def check_new_entries(self, data, lastT):
         """
         Method to check if there are entries read from the file that have not been plotted yet.
 
@@ -593,18 +584,18 @@ class DetectorPlotView1D(DetectorPlotView):
             indicate the axis being selected over (e.g., times so we onnly plot data that has not 
             been handled before).
 
-        last_t : `int`, `float`
+        lastT : `int`, `float`
             The value of the last x-value plotted. Used to filter out data lines already plotted.
 
         Returns
         -------
         `tuple` :
-            (x, y) The new x and y coordinates as lists to be plotted where x>`last_t`.
+            (x, y) The new x and y coordinates as lists to be plotted where x>`lastT`.
         """
         newts, newds = data
 
         # find indices of the x and ys not plotted yet
-        mask = (newts>last_t) if last_t is not None else np.array([True]*len(newts))
+        mask = (newts>lastT) if lastT is not None else np.array([True]*len(newts))
 
         # if no entries are to be plotted just return nothing
         if (~mask).all():
@@ -651,20 +642,20 @@ class DetectorPlotView1D(DetectorPlotView):
             #AttributeError: 'NoneType' object has no attribute 'tolist', this from having nothing plotted originally
             return [], []
         
-    def get_data(self, last_t):
+    def get_data(self, lastT):
         """
         Read the file `self.data_file` from the end with a memory buffer size of `self.bufferSize` and 
-        return data from lines with a first value greater than `last_t`
+        return data from lines with a first value greater than `lastT`
 
         Parameters
         ----------
-        last_t : `int`, `float`
+        lastT : `int`, `float`
             The value of the last x-value plotted. Used to filter out data lines already plotted.
 
         Returns
         -------
         `tuple` :
-            (x, y) The new x and y coordinates to be plots where x>`last_t`.
+            (x, y) The new x and y coordinates to be plots where x>`lastT`.
         """
 
         # check if the file exists yet, if not return nothing
@@ -676,7 +667,7 @@ class DetectorPlotView1D(DetectorPlotView):
         if data==self.return_empty():
             return self.return_empty()
 
-        return self.check_new_entries(data, last_t)
+        return self.check_new_entries(data, lastT)
     
     def update_plot_data(self):
         """
@@ -692,8 +683,8 @@ class DetectorPlotView1D(DetectorPlotView):
         x, y = self.get_plot_data()
 
         # find the last x-value plotted
-        last_x = x[-1] if len(x)>0 else None
-        newx, newy = self.get_data(last_x)
+        lastX = x[-1] if len(x)>0 else None
+        newx, newy = self.get_data(lastX)
 
         # just average over some coordinates fto reduce the number of points being plotted
         newx, newy = self.process_data(arrx=newx, arry=newy)
@@ -1296,11 +1287,7 @@ class DetectorPopout(QWidget):
         # allow the window to close
         event.accept()
 
-import FoGSE.windows.CdTewindow as wcdte
-from FoGSE.demos.readRawToRefined_single_cdte import CdTeFileReader
-import os
-FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-_datafile = FILE_DIR+"/data/test_berk_20230728_det05_00007_001"
+
 
 class DetectorArrayDisplay(QWidget):
     """
@@ -1346,7 +1333,7 @@ class DetectorArrayDisplay(QWidget):
             DetectorPlotViewIM(self, name=detectorNames[0]),
             DetectorPlotViewTP(self, name=detectorNames[1]),
             DetectorPlotViewSP(self, name=detectorNames[2]),
-            wcdte.CdTeWindow(reader=CdTeFileReader(_datafile),name=detectorNames[3]),
+            DetectorPlotView(self, name=detectorNames[3]),
             DetectorPlotView(self, name=detectorNames[4]),
             DetectorPlotView(self, name=detectorNames[5]),
             DetectorPlotView(self, name=detectorNames[6]),
@@ -1488,8 +1475,8 @@ class DetectorGridDisplay(QWidget):
             DetectorPlotViewIM(self, name=detector_names[0]),
             DetectorPlotViewTP(self, name=detector_names[1]),
             DetectorPlotViewSP(self, name=detector_names[2]),
-            wcdte.CdTeWindow(reader=CdTeFileReader(_datafile),name=detector_names[3]),
-            wcdte.CdTeWindow(reader=CdTeFileReader(_datafile),plotting_product="spectrogram",name=detector_names[4]),
+            DetectorPlotViewIM(self, name=detector_names[3]),
+            DetectorPlotViewIM(self, name=detector_names[4]),
             DetectorPlotViewTP(self, name=detector_names[5]),
             DetectorPlotViewSP(self, name=detector_names[6]),
         ]
@@ -1498,10 +1485,11 @@ class DetectorGridDisplay(QWidget):
         self.detector_panels[1].data_file = DATA_FILE
         self.detector_panels[2].data_file = DATA_FILE
 
-        self.detector_panels[3].set_fade_out(5)
-        self.detector_panels[3].set_image_colour("red")
-        # self.detector_panels[4].update_image_dimensions(height=10, width=50)
-        # self.detector_panels[4].image_colour = "red"
+        self.detector_panels[3].data_file = DATA_FILE
+        self.detector_panels[3].fade_out, self.detector_panels[3].image_colour = 5, "green"
+        self.detector_panels[4].data_file = DATA_FILE
+        self.detector_panels[4].update_image_dimensions(height=10, width=50)
+        self.detector_panels[4].image_colour = "red"
         self.detector_panels[5].data_file = DATA_FILE
         self.detector_panels[5].average_every = 100
         self.detector_panels[6].data_file = DATA_FILE
