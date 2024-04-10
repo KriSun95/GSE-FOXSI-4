@@ -230,7 +230,8 @@ class CdTeWidget(QWidget):
         self.strips_pt.update_label(round(self.image.reader.collection.mean_num_of_pt_strips(),1))
 
         _frame_count = self.image.reader.collection.get_unread_can_frame_count()
-        self._frame_count_value += _frame_count
+        self._frame_count_value = self._frame_count_value+_frame_count if (self._frame_count_value>0) or (_frame_count>0) else self._frame_count_value
+        self._frame_count_value = 0 if (self._frame_count_value<0) else self._frame_count_value
         self.frames_t.update_label(self._frame_count_value)
         if hasattr(self, "_old_frames_t"):
             self.frames_tm1.update_label(self._old_frames_t)
