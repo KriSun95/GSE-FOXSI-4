@@ -93,8 +93,8 @@ class TimepixWindow(BaseWindow):
         new_flux = self.reader.collection.get_flux()
         
         # defined how to add/append onto the new data arrays
-        self.mean_tot.add_plot_data(new_mean_tot, replace={"this":[0], "with":[np.nan]})
-        self.flux.add_plot_data(new_flux, replace={"this":[0], "with":[np.nan]})
+        self.mean_tot.add_plot_data(new_mean_tot)
+        self.flux.add_plot_data(new_flux)
 
         # plot the newly updated x and ys
         self.mean_tot.manage_plotting_ranges()
