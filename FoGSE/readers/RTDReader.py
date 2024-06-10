@@ -6,8 +6,8 @@ the RTDs
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.RTDparser import rtdparser
-from FoGSE.collections.RTDCollection import RTDCollection
+from FoGSE.telemetry_tools.parsers.RTDparser import rtdparser
+from FoGSE.telemetry_tools.collections.RTDCollection import RTDCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class RTDReader(BaseReader):
@@ -93,7 +93,7 @@ class RTDReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         # take human readable and convert and set to 

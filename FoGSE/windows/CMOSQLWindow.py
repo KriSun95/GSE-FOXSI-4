@@ -7,7 +7,7 @@ import numpy as np
 
 from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout
 
-from FoGSE.collections.CMOSQLCollection import det_ql_arcminutes, CMOS_QL_MASK_ARRAY
+from FoGSE.telemetry_tools.collections.CMOSQLCollection import det_ql_arcminutes, CMOS_QL_MASK_ARRAY
 from FoGSE.readers.CMOSQLReader import CMOSQLReader
 from FoGSE.windows.base_windows.BaseWindow import BaseWindow
 from FoGSE.windows.base_windows.ImageWindow import Image

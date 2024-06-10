@@ -12,7 +12,7 @@ manager. I have also fixed the ...split('\n') lines."""
 import os
 import struct
 
-from FoGSE.parsers.CdTeparser import CdTerawalldata2parser
+
 
 class BackwardsReader:
 
@@ -100,6 +100,7 @@ class BackwardsReader:
 
 
 def read_raw_cdte(file):
+    from FoGSE.telemetry_tools.parsers.CdTeparser import CdTerawalldata2parser
     # blksize=41204 for first full frame, blksize=73984 to do 2 frames, 
     # so 73984 + (73984-41204) for the next? -> correct, so 41204 bytes
     # to get to the end of the first frame, 32780 bytes thereafter

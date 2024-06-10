@@ -9,9 +9,9 @@ Can read:
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CdTeparser import CdTedehkparser
-# from FoGSE.parsers.CdTeframeparser import CdTerawdataframe2parser
-from FoGSE.collections.DECollection import DECollection
+from FoGSE.telemetry_tools.parsers.CdTeparser import CdTedehkparser
+# from FoGSE.telemetry_tools.parsers.CdTeframeparser import CdTerawdataframe2parser
+from FoGSE.telemetry_tools.collections.DECollection import DECollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class DEReader(BaseReader):
@@ -105,7 +105,7 @@ class DEReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         # take human readable and convert and set to 

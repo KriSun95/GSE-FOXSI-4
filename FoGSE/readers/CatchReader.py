@@ -8,7 +8,7 @@ Can read:
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.collections.CatchCollection import CatchCollection
+from FoGSE.telemetry_tools.collections.CatchCollection import CatchCollection
 from FoGSE.utils import get_system_value
 
 class CatchReader(BaseReader):
@@ -99,7 +99,7 @@ class CatchReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         # take human readable and convert and set to 

@@ -6,7 +6,7 @@ import numpy as np
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,QBoxLayout
 
-from FoGSE.parsers.Timepixparser import FLAG_MESSAGES
+from FoGSE.telemetry_tools.parsers.Timepixparser import FLAG_MESSAGES
 from FoGSE.readers.TimepixReader import TimepixReader
 from FoGSE.windows.TimepixWindow import TimepixWindow
 from FoGSE.widgets.QValueWidget import QValueRangeWidget, QValueCheckWidget, QValueMultiRangeWidget, QValueListWidget

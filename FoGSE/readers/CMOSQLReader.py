@@ -9,8 +9,8 @@ Can read:
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CMOSparser import QLimageData 
-from FoGSE.collections.CMOSQLCollection import CMOSQLCollection
+from FoGSE.telemetry_tools.parsers.CMOSparser import QLimageData 
+from FoGSE.telemetry_tools.collections.CMOSQLCollection import CMOSQLCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class CMOSQLReader(BaseReader):
@@ -100,7 +100,7 @@ class CMOSQLReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CMOSQLCollection.CMOSQLCollection` :
+        `FoGSE.telemetry_tools.collections.CMOSQLCollection.CMOSQLCollection` :
             The CMOS collection.
         """
         # take human readable and convert and set to 

@@ -26,8 +26,8 @@ from PyQt6.QtWidgets import QWidget
 
 # import parser for `extract_raw_data` and `extract_raw_data_<det>`
 # import collection for `parsed_2_collections`
-# for example `from FoGSE.parsers.CdTeparser import CdTerawalldata2parser`
-# for example from `FoGSE.collections.CdTeCollection import CdTeCollection`
+# for example `from FoGSE.telemetry_tools.parsers.CdTeparser import CdTerawalldata2parser`
+# for example from `FoGSE.telemetry_tools.collections.CdTeCollection import CdTeCollection`
 
 class BaseReader(QWidget):
     """

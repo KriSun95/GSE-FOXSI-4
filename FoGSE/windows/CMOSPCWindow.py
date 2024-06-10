@@ -6,7 +6,7 @@ import numpy as np
 
 from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout
 
-from FoGSE.collections.CMOSPCCollection import det_pc_arcminutes
+from FoGSE.telemetry_tools.collections.CMOSPCCollection import det_pc_arcminutes
 from FoGSE.readers.CMOSPCReader import CMOSPCReader
 from FoGSE.windows.base_windows.BaseWindow import BaseWindow
 from FoGSE.windows.base_windows.ImageWindow import Image

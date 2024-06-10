@@ -7,7 +7,7 @@ import numpy as np
 from PyQt6 import QtCore
 from PyQt6.QtWidgets import QApplication
 
-from FoGSE.collections.CdTeCollection import CDTE_STRIP_EDGES_ARCMINUTES
+from FoGSE.telemetry_tools.collections.CdTeCollection import CDTE_STRIP_EDGES_ARCMINUTES
 from FoGSE.demos.readRawToRefined_single_cdte import CdTeFileReader
 from FoGSE.readers.CdTePCReader import CdTePCReader
 from FoGSE.windows.base_windows.BaseWindow import BaseWindow

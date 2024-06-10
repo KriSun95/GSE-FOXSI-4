@@ -6,11 +6,11 @@ import struct
 import numpy as np
 
 from FoGSE.demos.CdTerawalldata2parser_existingFile import CdTerawalldata2parser_existingFile
-from FoGSE.parsers.CdTeframeparser import CdTerawdataframe2parser
-from FoGSE.parsers.CdTeparser import CdTerawalldata2parser
+from FoGSE.telemetry_tools.parsers.CdTeframeparser import CdTerawdataframe2parser
+from FoGSE.telemetry_tools.parsers.CdTeparser import CdTerawalldata2parser
 from FoGSE.demos.readRawToRefined_single_det import Reader
 from FoGSE.readers.BaseReader import BaseReader
-from FoGSE.collections.CdTeCollection import CdTeCollection
+from FoGSE.telemetry_tools.collections.CdTeCollection import CdTeCollection
     
 
 class CdTeFileReader(BaseReader):

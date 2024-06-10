@@ -9,8 +9,8 @@ Can read:
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CMOSparser import PCimageData
-from FoGSE.collections.CMOSPCCollection import CMOSPCCollection
+from FoGSE.telemetry_tools.parsers.CMOSparser import PCimageData
+from FoGSE.telemetry_tools.collections.CMOSPCCollection import CMOSPCCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class CMOSPCReader(BaseReader):
@@ -100,7 +100,7 @@ class CMOSPCReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CMOSPCCollection.CMOSPCCollection` :
+        `FoGSE.telemetry_tools.collections.CMOSPCCollection.CMOSPCCollection` :
             The CMOS collection.
         """
         # take human readable and convert and set to 

@@ -12,9 +12,9 @@ import numpy as np
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CdTeparser import CdTecanisterhkparser
-# from FoGSE.parsers.CdTeframeparser import CdTerawdataframe2parser
-from FoGSE.collections.CdTeHKCollection import CdTeHKCollection
+from FoGSE.telemetry_tools.parsers.CdTeparser import CdTecanisterhkparser
+# from FoGSE.telemetry_tools.parsers.CdTeframeparser import CdTerawdataframe2parser
+from FoGSE.telemetry_tools.collections.CdTeHKCollection import CdTeHKCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class CdTeHKReader(BaseReader):
@@ -108,7 +108,7 @@ class CdTeHKReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         # take human readable and convert and set to 

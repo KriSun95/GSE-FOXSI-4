@@ -34,8 +34,8 @@ from PyQt6 import QtCore
 from PyQt6.QtWidgets import QWidget
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CdTeparser import CdTerawalldata2parser
-from FoGSE.collections.CdTeCollection import CdTeCollection
+from FoGSE.telemetry_tools.parsers.CdTeparser import CdTerawalldata2parser
+from FoGSE.telemetry_tools.collections.CdTeCollection import CdTeCollection
 
 
 class Reader(QWidget):
@@ -238,7 +238,7 @@ class Reader(QWidget):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         # take human readable and convert and set to 

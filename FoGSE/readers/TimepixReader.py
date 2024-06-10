@@ -8,8 +8,8 @@ Can read:
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.Timepixparser import timepix_parser
-from FoGSE.collections.TimepixCollection import TimepixCollection
+from FoGSE.telemetry_tools.parsers.Timepixparser import timepix_parser
+from FoGSE.telemetry_tools.collections.TimepixCollection import TimepixCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class TimepixReader(BaseReader):
@@ -101,7 +101,7 @@ class TimepixReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         if parsed_data is None:

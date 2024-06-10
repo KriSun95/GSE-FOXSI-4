@@ -13,9 +13,9 @@ import os
 from FoGSE.readers.BaseReader import BaseReader
 
 from FoGSE.readBackwards import BackwardsReader
-from FoGSE.parsers.CdTeparser import CdTerawalldata2parser
-from FoGSE.parsers.CdTeframeparser import CdTerawdataframe2parser
-from FoGSE.collections.CdTeCollection import CdTeCollection
+from FoGSE.telemetry_tools.parsers.CdTeparser import CdTerawalldata2parser
+from FoGSE.telemetry_tools.parsers.CdTeframeparser import CdTerawdataframe2parser
+from FoGSE.telemetry_tools.collections.CdTeCollection import CdTeCollection
 from FoGSE.utils import get_frame_size, get_system_value
 
 class CdTePCReader(BaseReader):
@@ -116,7 +116,7 @@ class CdTePCReader(BaseReader):
 
         Returns
         -------
-        `FoGSE.detector_collections.CdTeCollection.CdTeCollection` :
+        `FoGSE.telemetry_tools.collections.CdTeCollection.CdTeCollection` :
             The CdTe collection.
         """
         if parsed_data[1]['ti'][0]==-1:
